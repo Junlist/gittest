@@ -33,11 +33,12 @@ git checkout -- <readme.txt>  丢弃工作区的操作
 git rm <file> 后commit
 若已经手动删除，可直接add最后conmmit
 
-
+（远程push）
 关联远程库git remote add origin git@server-name:path/repo-name.git；
 推送master分支git push -u origin master
 推送最新修改git push origin master
-
+（远程clone）
+git clone https://github.com/Junlist/gitskills.git
 
 
 
