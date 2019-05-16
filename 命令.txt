@@ -3,42 +3,81 @@
 $ git config --global user.name "Your Name"
 $ git config --global user.email "email@example.com"
 
-pwd 当前目录
+pwd 						当前目录
 
-git init 初始化仓库
+git init					初始化仓库
 
-git add <file> 添加文件
+git add <file> 				添加文件
 git commit -m "<message>"   提交文件
 
-git status 查看文件是否被修改（是否有修改，是否添加，是否提交）
+git status		 查看文件是否被修改（是否有修改，是否添加，是否提交）
 
-git diff <file> 查看修改内容(add后不能看到修改内容了)
+git diff <file> 		查看修改内容(add后不能看到修改内容了)
 (add或者commit提交后)用git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别：
 
-git log 查看提交记录
+git log 		查看提交记录
 git log  --pertty=oneline
 
+（版本回退）
 git reset --hard HEAD^(^代表上一个，或HEAD~1)
 git reset --hard <commit id>
-
 git reflog查看指针回退记录(用来看未来版本)
 
-git checkout -- <readme.txt>     (丢弃工作区修改)让这个文件回到最近一次add或commit状态
+（撤销修改）
+git checkout -- <readme.txt>     	(丢弃工作区修改)让这个文件回到最近一次add或commit状态
+若已经add，先撤销reset，后checkout
+git reset HEAD <file>    			把add到暂存区的修改撤销，回到工作区
+git checkout -- <readme.txt>  		丢弃工作区的操作
 
-（若已经add，先撤销reset，后checkout）
-git reset HEAD <file>    把add到暂存区的修改撤销，回到工作区
-git checkout -- <readme.txt>  丢弃工作区的操作
-
-删除文件
-git rm <file> 后commit
+（删除文件）
+git rm <file> 			然后commit
 若已经手动删除，可直接add最后conmmit
 
 （远程push）
-关联远程库git remote add origin git@server-name:path/repo-name.git；
-推送master分支git push -u origin master
-推送最新修改git push origin master
+git remote add origin git@server-name:path/repo-name.git；  关联远程库
+git push -u origin master    								推送master分支
+git push origin master										推送最新修改
 （远程clone）
 git clone https://github.com/Junlist/gitskills.git
+
+（创建切换分支）
+git branch     			查看分支
+git branch <name> 		创建分支
+git checkout <name>		切换分支
+git checkout -b <name> 	创建+切换分支
+git merge <name>		合并某分支到当前分支（不能看到合并记录，推荐--no-ff -m "<merge with no-ff>" <dev>）
+git branch -d <name>	删除分支
+
+(解决分支冲突（分支各自有新commit时会出现）)
+当两个分支的文件的内容不一样时，合并分支会出现错误，需要手动合并
+git merge <featurel> 	--此时会报错
+打开冲突文件，更改内容,然后add,commit.分支合并
+git branch -d featurel  --删除分支（-D强行删除）
+
+git log
+git log --graph			--分支合并图
+
+(分支管理策略)
+通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
+如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+ git merge --no-ff -m "<merge with no-ff>" <dev> (普通模式，合并后历史有分支，能看出来曾经做过合并)
+
+
+
+(BUG分支)（新文件必须先add文件后才能stash，因为新建文件没被管理，可能出问题）
+目前dev分支没完成，不能commit，但是需要切换issue分支修改master bug
+1.git stash，隐藏目前工作区
+2.切换master，新建issue分支
+3.完成后切换dev分支，git stash pop
+
+可选
+git stash list  --查看工作现场
+git stash apply 恢复（stash内容并不删除）
+git stash drop  删除stash内容
+
+
+
+
 
 
 
