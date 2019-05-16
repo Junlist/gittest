@@ -17,6 +17,7 @@ git diff <file> 		查看修改内容(add后不能看到修改内容了)
 
 git log 		查看提交记录
 git log  --pertty=oneline
+git log --graph --pretty=oneline --abbrev-commit		更好用
 
 （版本回退）
 git reset --hard HEAD^(^代表上一个，或HEAD~1)
@@ -39,6 +40,19 @@ git push -u origin master    								推送master分支
 git push origin master										推送最新修改
 （远程clone）
 git clone https://github.com/Junlist/gitskills.git
+git remote rm origin 删除关联远程库
+
+（多人协作）
+git remote 				查看远程库的信息
+git remote -v 			显示更详细的信息
+git push origin master(dev)推送分支
+抓取分支
+git clone git@github.com:michaelliao/learngit.git(默认情况只有master分支)
+git checkout -b dev origin/dev  	抓取远程dev分支
+git push origin dev					推送到远程dev
+推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突
+解决办法，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送：
+
 
 （创建切换分支）
 git branch     			查看分支
@@ -76,16 +90,8 @@ git stash apply 恢复（stash内容并不删除）
 git stash drop  删除stash内容
 
 
-（多人协作）
-git remote 				查看远程库的信息
-git remote -v 			显示更详细的信息
-git push origin master(dev)推送分支
-抓取分支
-git clone git@github.com:michaelliao/learngit.git(默认情况只有master分支)
-git checkout -b dev origin/dev  	抓取远程dev分支
-git push origin dev					推送到远程dev
-推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突
-解决办法，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送：
+
+
 
 （rebase）
 rebase操作可以把本地未push的分叉提交历史整理成直线；
@@ -96,9 +102,33 @@ git rebase
 Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
 
 
+（创建标签）
+git tag <name>
+git tag <name> <commit id>
+git show <tagname> 		查看标签信息
+git tag -a <tagname> -m "blablabla..."			指定标签信息
+git tag 				查看所有标签
+
+（操作标签）
+git push origin <tagname>		推送标签（标签不会自动推送到远程）
+git push origin --tage			全部推送
+git tag -d <tagname>			删除标签
+git push origin :refs/tags/v0.9	删除远程标签（先删除本地）
 
 
+在GitHub上，可以任意Fork开源仓库；
+自己拥有Fork后的仓库的读写权限；
+可以推送pull request给官方仓库来贡献代码。
 
+（忽略特殊文件）
+编写.gitignore
+.gitignore文件本身要放到版本库里，并且可以对.gitignore做版本管理
+git check-ignore			命令检查
+git add -f App.class		强制添加
+
+（配置别名）
+git config --global alias.st status		以后st就表示status：
+https://www.liaoxuefeng.com/wiki/896043488029600/898732837407424
 
 
 
